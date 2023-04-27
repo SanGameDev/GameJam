@@ -23,9 +23,9 @@ public class vidaDeJugador : MonoBehaviour
     }
 
 
-    public void RecibirDaño(int daño)
+    public void RecibirDano(int dano)
     {
-        vidaPlayer -= daño;
+        vidaPlayer -= dano;
         if (vidaPlayer < 0)
         {
             vidaPlayer = 0;
