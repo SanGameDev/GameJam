@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
+    public GameObject item;
     public static ObjectPool SharedInstance;
     public List<GameObject> pool;
-    public GameObject item;
-    float timer = 1.0f;
 
     void Awake()
     {
@@ -17,17 +16,6 @@ public class ObjectPool : MonoBehaviour
     void Start()
     {
         pool = new List<GameObject>();
-    }
-
-    void Update()
-    {
-        // Make a star every second
-        timer -= Time.deltaTime;
-        if (timer < 0)
-        {
-            timer = 1.0f;
-            GetPooledObject().SetActive(true);
-        }
     }
 
     public GameObject GetPooledObject()

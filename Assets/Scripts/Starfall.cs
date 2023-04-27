@@ -7,11 +7,11 @@ public class Starfall : MonoBehaviour
     public float speed = 1.0f,     angle = 90.0f;
     public float minAngle = 45.0f, maxAngle = 135.0f;
     public float minSpeed = 2.0f,  maxSpeed = 5.0f;
-    ParticleSystem boom;
+    ObjectPool boomPool;
 
     void Awake()
     {
-        boom = GameObject.Find("Splash").GetComponent<ParticleSystem>();
+        boomPool = GameObject.Find("BoomPool").GetComponent<ObjectPool>();
     }
 
     void OnDisable()
@@ -46,7 +46,9 @@ public class Starfall : MonoBehaviour
             Vector2 dir = player.transform.position - transform.position;
             player.gameObject.GetComponent<Rigidbody2D>().AddForce(dir, ForceMode2D.Impulse);
             // Explosion Particle System
+            ParticleSystem boom = boomPool.GetPooledObject().GetComponent<ParticleSystem>();
             boom.transform.position = transform.position;
+            boom.gameObject.SetActive(true);
             boom.Clear();
             boom.Play();
             // Die
