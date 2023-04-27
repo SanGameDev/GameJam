@@ -11,10 +11,13 @@ public class movimientoJugador : MonoBehaviour
 
     private Rigidbody2D rb2d;
     private float movimientoHorizontal = 0f;
-    [SerializeField] private float velocidadDeMovimiento;
+    [SerializeField] public float velocidadDeMovimiento;
     [SerializeField] private float suavizadoDeMovimiento;
+    [SerializeField] public float velocidadDeMovimientoShift;
     private Vector3 velocidad = Vector3.zero;
     private bool mirandoDerecha = true;
+    public bool estaCorriendo = false;
+    public bool traeCarga = false;
 
 
     //Salto
@@ -34,9 +37,18 @@ public class movimientoJugador : MonoBehaviour
 
     private void Update()
     {
-        movimientoHorizontal = Input.GetAxisRaw("Horizontal") * velocidadDeMovimiento;
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) // Verificar si se está presionando la tecla Shift
+        {
+            movimientoHorizontal = Input.GetAxisRaw("Horizontal") * velocidadDeMovimientoShift; // Usar la velocidad de movimiento con Shift
+            estaCorriendo = true;
+        }
+        else
+        {
+            movimientoHorizontal = Input.GetAxisRaw("Horizontal") * velocidadDeMovimiento; // Usar la velocidad de movimiento normal
+            estaCorriendo = false;
+        }
 
-        if(Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump"))
         {
             salto = true;
         }
@@ -69,15 +81,15 @@ public class movimientoJugador : MonoBehaviour
         }
     }
 
-        void Girar()
-        {
-            mirandoDerecha = !mirandoDerecha;
-            Vector3 escala = transform.localScale;
-            escala.x *= -1;
-            transform.localScale = escala;
-        }
-    
-        
+    void Girar()
+    {
+        mirandoDerecha = !mirandoDerecha;
+        Vector3 escala = transform.localScale;
+        escala.x *= -1;
+        transform.localScale = escala;
+    }
+
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
@@ -88,3 +100,4 @@ public class movimientoJugador : MonoBehaviour
 
 
 }
+
