@@ -1,0 +1,42 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class parralax : MonoBehaviour
+{
+
+    //Se le agrega el script a cada capa del fondo y se da un valor distinto a cada capa
+
+    [SerializeField] private float parallaxMultiplier;
+    private Transform cameraTransform;
+    private Vector3 prevoiusCameraPosition;
+    private float spriteWidth, startPosition;
+    // Start is called before the first frame update
+    void Start()
+    {
+        cameraTransform = Camera.main.transform;
+        prevoiusCameraPosition = cameraTransform.position;
+        spriteWidth = GetComponent<SpriteRenderer>().bounds.size.x;
+        startPosition = transform.position.x;
+    }
+
+    // Update is called once per frame
+    void LateUpdate()
+    {
+        float deltaX = (cameraTransform.position.x - prevoiusCameraPosition.x) * parallaxMultiplier;
+        float moveAmount = cameraTransform.position.x * (1 - parallaxMultiplier);
+        transform.Translate(new Vector3(deltaX, 0, 0));
+        prevoiusCameraPosition = cameraTransform.position;
+
+        if (moveAmount > startPosition + spriteWidth)
+        {
+            transform.Translate(new Vector3(spriteWidth, 0, 0));
+            startPosition += spriteWidth;
+        }
+        else if (moveAmount < startPosition - spriteWidth)
+        {
+            transform.Translate(new Vector3(-spriteWidth, 0, 0));
+            startPosition -= spriteWidth;
+        }
+    }
+}
