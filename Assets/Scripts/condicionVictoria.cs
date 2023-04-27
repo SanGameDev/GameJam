@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class metaVcitoria : MonoBehaviour
+public class condicionVictoria : MonoBehaviour
 {
     public movimientoJugador movJug;
 
