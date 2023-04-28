@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class contadorEstrellasTimer : MonoBehaviour
 {
-    public float tiempoLimite = 60f; // Tiempo límite para completar el nivel
-    private float tiempoTranscurrido = 0f; // Tiempo que ha pasado desde que se inició el nivel
-    private int numEstrellas = 0; // Número de estrellas obtenidas
+    public float tiempoLimite = 60f; // Tiempo lï¿½mite para completar el nivel
+    private float tiempoTranscurrido = 0f; // Tiempo que ha pasado desde que se iniciï¿½ el nivel
+    private int numEstrellas = 0; // Nï¿½mero de estrellas obtenidas
     public bool nivelCompletado = false; // Indica si el jugador ha completado el nivel
     public Text textoTiempo; // Referencia al objeto de texto que muestra el tiempo
-    public Text textoEstrellas; // Referencia al objeto de texto que muestra el número de estrellas
+    public Text textoEstrellas; // Referencia al objeto de texto que muestra el nï¿½mero de estrellas
     public float DosEstrellas = 10; //Tiempo en el que se dan cada numero de estrellas
     public float TresEstrellas = 20;
+    public TimeSpan time;
+    
 
     void Start()
     {
@@ -26,10 +29,11 @@ public class contadorEstrellasTimer : MonoBehaviour
     {
         if (!nivelCompletado)  //Aqui ayuda a que el contador siga avanzando
         {
-            tiempoTranscurrido += Time.deltaTime;
+            tiempoTranscurrido = tiempoTranscurrido + Time.deltaTime;
+            //tiempoTranscurrido += Time.deltaTime;
             ActualizarTextos();
 
-            // Comprobar si se ha superado el tiempo límite
+            // Comprobar si se ha superado el tiempo lï¿½mite
             if (tiempoTranscurrido >= tiempoLimite)
             {
                 nivelCompletado = true;
@@ -37,16 +41,16 @@ public class contadorEstrellasTimer : MonoBehaviour
                 ActualizarTextos();
             }
         }
+        time = TimeSpan.FromSeconds(tiempoTranscurrido); 
         CompletarNivel();
     }
 
     void ActualizarTextos()
     {
-        // Mostrar el tiempo transcurrido y el número de estrellas obtenidas
-        textoTiempo.text = "Tiempo: " + Mathf.FloorToInt(tiempoTranscurrido).ToString();
+        // Mostrar el tiempo transcurrido y el nï¿½mero de estrellas obtenidas
+        textoTiempo.text = time.ToString(@"mm\:ss\:fff");
         textoEstrellas.text = "Estrellas: " + numEstrellas.ToString();
-    }
-
+    }   
     public void CompletarNivel()
     {
         if (nivelCompletado == true)   //Determina si el tiempo empleado merece una dos o tres etrellas

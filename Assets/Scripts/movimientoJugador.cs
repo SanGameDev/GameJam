@@ -7,8 +7,6 @@ public class movimientoJugador : MonoBehaviour
 
     //Se debe agregar un empty object como controlador suelo
     //Agregar la capa de suelo
-
-
     private Rigidbody2D rb2d;
     private float movimientoHorizontal = 0f;
     [SerializeField] public float velocidadDeMovimiento;
@@ -27,6 +25,8 @@ public class movimientoJugador : MonoBehaviour
     [SerializeField] private Vector3 dimensionesCaja;
     [SerializeField] private bool enSuelo;
 
+    PlanetGravity planetGravity;
+
     private bool salto = false;
 
 
@@ -37,7 +37,7 @@ public class movimientoJugador : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) // Verificar si se está presionando la tecla Shift
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) // Verificar si se estï¿½ presionando la tecla Shift
         {
             movimientoHorizontal = Input.GetAxisRaw("Horizontal") * velocidadDeMovimientoShift; // Usar la velocidad de movimiento con Shift
             estaCorriendo = true;
@@ -96,8 +96,16 @@ public class movimientoJugador : MonoBehaviour
         Gizmos.DrawWireCube(controladorSuelo.position, dimensionesCaja);
     }
 
-
-
-
+    void OnTriggerEnter2D(Collider2D other) 
+    {
+        if(other.tag == "Asteroide")
+        {
+            rb2d.gravityScale = 0.0f;
+            planetGravity = this.GetComponent<PlanetGravity>();
+            planetGravity.enabled = true;
+            this.GetComponent<movimientoJugador>().enabled = false;
+            planetGravity.planet = other.gameObject;
+        }
+    }
 }
 

@@ -11,10 +11,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Creditos.unity
     guid: 567def179cdb8c544b6f82442e6af3cc
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Scenes/AlanFlores02.unity
     guid: 7fdc286b3fcce624998dc8bbad9267ea
+  - enabled: 1
+    path: Assets/Scenes/Game.unity
+    guid: 7cbda1bb3f1a2c14d92816478e42ddba
   m_configObjects: {}
