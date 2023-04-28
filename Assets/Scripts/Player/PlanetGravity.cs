@@ -11,7 +11,8 @@ public class PlanetGravity : MonoBehaviour
     public float gravityDistance;
     float lookAngle;
     [Header("Player Variables")]
-    public float playerSpeed = 50;
+    public float playerSpeed = 8;
+    public float playerJump = 15;
 
 
     void Start()
@@ -29,6 +30,10 @@ public class PlanetGravity : MonoBehaviour
         else if(Input.GetKey(KeyCode.A))
         {
             transform.Translate(Vector2.left * (Time.deltaTime * playerSpeed), Space.Self);
+        }
+        else if(Input.GetKey(KeyCode.Space))
+        {
+            transform.Translate(Vector2.up *  playerSpeed, Space.Self);
         }
         else
         {
