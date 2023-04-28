@@ -8,18 +8,24 @@ public class vidaDeJugador : MonoBehaviour
     public int vidaMaxima = 100;
     public int vecesMuerto;
     public int multiplicadorVida = 3;
+    public movimientoJugador movJug;
+    public bool estaMuerto;
 
 
 
     private void Start()
     {
         vecesMuerto = 0;
+        
 
-
+        movJug = GameObject.FindObjectOfType<movimientoJugador>();
     }
     private void Update()
     {
         Escudo();
+        bool estaMuerto = movJug.estaMuerto;
+        
+        Muerte();
     }
 
 
@@ -31,18 +37,16 @@ public class vidaDeJugador : MonoBehaviour
             vidaPlayer = 0;
         }
 
-
-        if (vidaPlayer == 0)
-        {
-            Muerte();
-        }
-
     }
 
     public void Muerte()
     {
-        vecesMuerto++;
-        Debug.Log("Has muerto");
+        if (vidaPlayer == 0)
+        {
+            vecesMuerto++;
+            movJug.estaMuerto = true;
+            Debug.Log("Has muerto");
+        }
     }
 
     public void Escudo()

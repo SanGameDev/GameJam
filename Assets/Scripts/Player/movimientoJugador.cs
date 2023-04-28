@@ -24,6 +24,10 @@ public class movimientoJugador : MonoBehaviour
     [SerializeField] private Transform controladorSuelo;
     [SerializeField] private Vector3 dimensionesCaja;
     [SerializeField] private bool enSuelo;
+    public bool estaMuerto = false;
+  
+
+    private Animator animator;
 
     PlanetGravity planetGravity;
 
@@ -33,6 +37,7 @@ public class movimientoJugador : MonoBehaviour
     private void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -45,6 +50,9 @@ public class movimientoJugador : MonoBehaviour
         else
         {
             movimientoHorizontal = Input.GetAxisRaw("Horizontal") * velocidadDeMovimiento; // Usar la velocidad de movimiento normal
+
+            animator.SetFloat("Horizontal", Mathf.Abs(movimientoHorizontal));
+
             estaCorriendo = false;
         }
 
@@ -52,11 +60,15 @@ public class movimientoJugador : MonoBehaviour
         {
             salto = true;
         }
+        animMuerte();
     }
 
     private void FixedUpdate()
     {
         enSuelo = Physics2D.OverlapBox(controladorSuelo.position, dimensionesCaja, 0f, queEsSuelo);
+        animator.SetBool("enSuelo", enSuelo);
+
+
         Mover(movimientoHorizontal * Time.fixedDeltaTime, salto);
 
         salto = false;
@@ -105,6 +117,14 @@ public class movimientoJugador : MonoBehaviour
             planetGravity.enabled = true;
             this.GetComponent<movimientoJugador>().enabled = false;
             planetGravity.planet = other.gameObject;
+        }
+    }
+
+    void animMuerte()
+    {
+        if (estaMuerto==true)
+        {
+            animator.SetBool("estaMuerto", estaMuerto);
         }
     }
 }
