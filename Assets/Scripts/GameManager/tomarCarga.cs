@@ -7,6 +7,8 @@ public class tomarCarga : MonoBehaviour
     //Es un script para un collider2d trigger sobre el que estara el maletin o que sea el mismo maletin
     public bool traeCarga;
     public movimientoJugador movJug;
+    public GameObject level1;
+    public GameObject level2;
 
     private void Start()
     {
@@ -23,8 +25,10 @@ public class tomarCarga : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             movJug.traeCarga = true;
-            movJug.velocidadDeMovimiento /= 2f;
+            //movJug.velocidadDeMovimiento /= 2f;
             movJug.velocidadDeMovimientoShift /= 2f;
+            level1.SetActive(false);
+            level2.SetActive(true);
             Destroy(gameObject);
         }
     }

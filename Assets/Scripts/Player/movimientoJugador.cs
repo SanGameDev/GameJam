@@ -17,7 +17,6 @@ public class movimientoJugador : MonoBehaviour
     public bool estaCorriendo = false;
     public bool traeCarga = false;
 
-
     //Salto
     [SerializeField] private float fuerzaSalto;
     [SerializeField] private LayerMask queEsSuelo;
@@ -26,12 +25,19 @@ public class movimientoJugador : MonoBehaviour
     [SerializeField] private bool enSuelo;
     public bool estaMuerto = false;
   
-
     private Animator animator;
-
     PlanetGravity planetGravity;
-
     private bool salto = false;
+    public contadorEstrellasTimer contadorEstrellasTimer;
+    public int starsAmount;
+    public GameObject inGameCanvas;
+    public GameObject winCanvas;
+    public GameObject loseCanvas;
+    public GameObject oneStar;
+    public GameObject twoStar;
+    public GameObject threeStar;
+
+
 
 
     private void Start()
@@ -101,6 +107,31 @@ public class movimientoJugador : MonoBehaviour
         transform.localScale = escala;
     }
 
+    public void WinGame()
+    {
+        Time.timeScale = 0;
+        inGameCanvas.SetActive(false);
+        winCanvas.SetActive(true);
+        contadorEstrellasTimer.nivelCompletado = true;
+        contadorEstrellasTimer.CompletarNivel();
+        starsAmount = contadorEstrellasTimer.stars;
+        if(starsAmount == 2)
+        {
+            threeStar.SetActive(false);
+        }
+        else if(starsAmount == 1)
+        {
+            threeStar.SetActive(false);
+            twoStar.SetActive(false);
+        }
+    }
+
+    public void LoseGame()
+    {
+        Time.timeScale = 0;
+        inGameCanvas.SetActive(false);
+        loseCanvas.SetActive(true);
+    }
 
     private void OnDrawGizmos()
     {
@@ -117,6 +148,10 @@ public class movimientoJugador : MonoBehaviour
             planetGravity.enabled = true;
             this.GetComponent<movimientoJugador>().enabled = false;
             planetGravity.planet = other.gameObject;
+        }
+        else if(other.tag == "Death")
+        {
+            LoseGame();
         }
     }
 

@@ -33,7 +33,7 @@ public class PlanetGravity : MonoBehaviour
         }
         else if(Input.GetKey(KeyCode.Space))
         {
-            transform.Translate(Vector2.up *  playerSpeed, Space.Self);
+            transform.Translate(Vector2.up * (Time.deltaTime * playerJump), Space.Self);
         }
         else
         {

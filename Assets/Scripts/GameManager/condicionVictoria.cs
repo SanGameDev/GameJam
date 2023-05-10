@@ -22,11 +22,7 @@ public class condicionVictoria : MonoBehaviour
         {
             if (movJug.traeCarga == true)
             {
-                Debug.Log("Has ganado");
-            }
-            else if (movJug.traeCarga == false)
-            {
-                Debug.Log("Ve por la carga");
+                movJug.WinGame();
             }
         }
     }

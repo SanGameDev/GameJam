@@ -8,19 +8,19 @@ public class contadorEstrellasTimer : MonoBehaviour
 {
     public float tiempoLimite = 60f; // Tiempo l�mite para completar el nivel
     private float tiempoTranscurrido = 0f; // Tiempo que ha pasado desde que se inici� el nivel
-    private int numEstrellas = 0; // N�mero de estrellas obtenidas
     public bool nivelCompletado = false; // Indica si el jugador ha completado el nivel
     public Text textoTiempo; // Referencia al objeto de texto que muestra el tiempo
     public Text textoEstrellas; // Referencia al objeto de texto que muestra el n�mero de estrellas
-    public float DosEstrellas = 10; //Tiempo en el que se dan cada numero de estrellas
-    public float TresEstrellas = 20;
+    public float UnaEstrellas = 40; //Tiempo en el que se dan cada numero de estrellas
+    public float TresEstrellas = 30;
     public TimeSpan time;
+    public int stars;
     
 
     void Start()
     {
         tiempoTranscurrido = 0f;
-        numEstrellas = 0;
+        stars = 0;
         nivelCompletado = false;
         ActualizarTextos();
     }
@@ -37,37 +37,34 @@ public class contadorEstrellasTimer : MonoBehaviour
             if (tiempoTranscurrido >= tiempoLimite)
             {
                 nivelCompletado = true;
-                numEstrellas = 1;
+                CompletarNivel();
+                stars = 1;
                 ActualizarTextos();
             }
         }
         time = TimeSpan.FromSeconds(tiempoTranscurrido); 
-        CompletarNivel();
     }
 
     void ActualizarTextos()
     {
         // Mostrar el tiempo transcurrido y el n�mero de estrellas obtenidas
         textoTiempo.text = time.ToString(@"mm\:ss\:fff");
-        textoEstrellas.text = "Estrellas: " + numEstrellas.ToString();
+        textoEstrellas.text = "Estrellas: " + stars.ToString();
     }   
     public void CompletarNivel()
     {
-        if (nivelCompletado == true)   //Determina si el tiempo empleado merece una dos o tres etrellas
-        {
             if (tiempoTranscurrido <= TresEstrellas)
             {
-                Debug.Log("Tres estrellas");
-
+                stars = 3;
             }
-            else if (tiempoTranscurrido >= TresEstrellas && tiempoTranscurrido <= DosEstrellas)
+            else if (tiempoTranscurrido < UnaEstrellas && tiempoTranscurrido > TresEstrellas)
             {
-                Debug.Log("Dos Estrellas");
+                stars = 2;
+                Debug.Log("dos estrellas");
             }
-            else if (tiempoTranscurrido > DosEstrellas)
+            else if (tiempoTranscurrido >= UnaEstrellas)
             {
-                Debug.Log("Una estrella");
+                stars = 1;
             }
-        }
     }
 }
